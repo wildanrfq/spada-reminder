@@ -15,6 +15,7 @@ from commands import *
 
 load_dotenv()
 
+
 async def post_init(application: Application):
     schedule_jobs(application.job_queue)
     pool = await asqlite.create_pool("spada.db")

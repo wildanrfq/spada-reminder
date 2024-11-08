@@ -9,7 +9,7 @@ class SpadaDatabase:
 
     async def fetch(self, query, *args):
         async with self.pool.acquire() as conn:
-            return await conn.fetchall(query, args)
+            return await conn.fetch(query, args)
 
     async def fetchone(self, query, *args):
         async with self.pool.acquire() as conn:
@@ -18,7 +18,7 @@ class SpadaDatabase:
     async def execute(self, query, *args):
         async with self.pool.acquire() as conn:
             execute = await conn.execute(query, args)
-            return await execute.fetchall()
+            return await execute.fetch()
 
 
 class SpadaCtx(CallbackContext):
@@ -47,7 +47,7 @@ class SpadaCtx(CallbackContext):
         return self._sender_id == 1231482727
 
     async def is_registered(self):
-        users = await self._db.fetchall("SELECT * FROM users;")
+        users = await self._db.fetch("SELECT * FROM users;")
         return self._sender_id in [u.id for u in users]
 
     async def react(self, reaction: ReactionEmoji):
