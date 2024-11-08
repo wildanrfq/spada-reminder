@@ -9,7 +9,7 @@ class SpadaDatabase:
 
     async def fetch(self, query, *args):
         async with self.pool.acquire() as conn:
-            return await conn.fetch(query, args)
+            return await conn.fetchall(query, args)
 
     async def fetchone(self, query, *args):
         async with self.pool.acquire() as conn:
