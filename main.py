@@ -1,4 +1,4 @@
-import asqlite, sys, os
+import asqlite, sys, os, datetime
 
 from telegram import Update
 from telegram.ext import (
@@ -17,6 +17,7 @@ load_dotenv()
 
 
 async def post_init(application: Application):
+    application.bot_data["uptime"] = datetime.datetime.now(datetime.UTC)
     schedule_jobs(application.job_queue)
     pool = await asqlite.create_pool("spada.db")
     application.bot_data["db"] = SpadaDatabase(pool)
@@ -33,10 +34,11 @@ def main():
     context = ContextTypes(context=SpadaCtx)
 
     commands = [
-        Command("reg", reg),
-        Command("unreg", unreg),
         Command("r", restart),
         Command("p", ping),
+        Command("ping", ping),
+        Command("u", uptime),
+        Command("eval", e)
     ]
 
     application = (

@@ -18,7 +18,7 @@ class SpadaDatabase:
     async def execute(self, query, *args):
         async with self.pool.acquire() as conn:
             execute = await conn.execute(query, args)
-            return await execute.fetch()
+            return await execute.fetchall()
 
 
 class SpadaCtx(CallbackContext):
@@ -55,7 +55,7 @@ class SpadaCtx(CallbackContext):
 
     async def reply(self, message):
         return await self.application.bot.send_message(
-            chat_id=self._chat_id, text=message
+            chat_id=self._chat_id, text=message, disable_notification=True, parse_mode="MarkdownV2"
         )
 
     @classmethod
