@@ -6,10 +6,12 @@ from telegram.constants import ReactionEmoji as Emoji
 from contextlib import redirect_stdout
 from classes import SpadaCtx
 
+
 async def e(update: Update, ctx: SpadaCtx):
-    env = {
-            'ctx': ctx
-    }
+    if not ctx.is_owner():
+        return
+
+    env = {"ctx": ctx}
 
     env.update(globals())
     body = " ".join(ctx.args)
@@ -20,15 +22,15 @@ async def e(update: Update, ctx: SpadaCtx):
     try:
         exec(to_compile, env)
     except Exception as e:
-        return await ctx.reply(f'```py\n{e.__class__.__name__}: {e}\n```')
+        return await ctx.reply(f"```py\n{e.__class__.__name__}: {e}\n```")
 
-    func = env['func']
+    func = env["func"]
     try:
         with redirect_stdout(stdout):
             ret = await func()
     except Exception as e:
         value = stdout.getvalue()
-        await ctx.reply(f'```py\n{value}{traceback.format_exc()}\n```')
+        await ctx.reply(f"```py\n{value}{traceback.format_exc()}\n```")
     else:
         value = stdout.getvalue()
         try:
@@ -38,15 +40,16 @@ async def e(update: Update, ctx: SpadaCtx):
 
         if ret is None:
             if value:
-                await ctx.reply(f'```py\n{value}\n```')
+                await ctx.reply(f"```py\n{value}\n```")
         else:
-            await ctx.reply(f'```py\n{value}{ret}\n```')
+            await ctx.reply(f"```py\n{value}{ret}\n```")
+
 
 async def ping(update: Update, ctx: SpadaCtx):
     start = time.monotonic()
     await ctx.bot.send_chat_action(update.effective_chat.id, "typing")
     end = time.monotonic()
-    res = (end-start) * 1000
+    res = (end - start) * 1000
     await ctx.reply(f"Ping: {int(res)} ms")
 
 
