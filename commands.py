@@ -84,8 +84,14 @@ async def mock(update: Update, ctx: SpadaCtx):
     link_key = ctx.args[0]
     reply_markup = (
         markup([Absen.links[f"{link_key}_b"], Absen.links[f"{link_key}_c"]], link_key)
-        if link_key == "prak_alpro" or link_key == "prak_basdat"
-        else markup(Absen.links[link_key])
+        if link_key == "prak_basdat"
+        else (
+            markup(
+                [Absen.links[f"{link_key}_c"], Absen.links[f"{link_key}_d"]], link_key
+            )
+            if link_key == "prak_alpro"
+            else markup(Absen.links[link_key])
+        )
     )
     hari = ""
     for i, item in enumerate(Absen.schedule):
@@ -102,8 +108,14 @@ async def send(update: Update, ctx: SpadaCtx):
     link_key = ctx.args[0]
     reply_markup = (
         markup([Absen.links[f"{link_key}_b"], Absen.links[f"{link_key}_c"]], link_key)
-        if link_key == "prak_alpro" or link_key == "prak_basdat"
-        else markup(Absen.links[link_key])
+        if link_key == "prak_basdat"
+        else (
+            markup(
+                [Absen.links[f"{link_key}_c"], Absen.links[f"{link_key}_d"]], link_key
+            )
+            if link_key == "prak_alpro" or link_key == "prak_basdat"
+            else markup(Absen.links[link_key])
+        )
     )
     hari = ""
     for i, item in enumerate(Absen.schedule):

@@ -90,7 +90,16 @@ def absen(hari, link_key):
 
 
 def markup(url, link_key=None):
-    if link_key:
+    if link_key == "prak_alpro":
+        return InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("IF-C", url=url[0]),
+                    InlineKeyboardButton("IF-D", url=url[1]),
+                ]
+            ]
+        )
+    elif link_key == "prak_basdat":
         return InlineKeyboardMarkup(
             [
                 [
@@ -99,7 +108,8 @@ def markup(url, link_key=None):
                 ]
             ]
         )
-    return InlineKeyboardMarkup([[InlineKeyboardButton("SPADA", url=url)]])
+    else:
+        return InlineKeyboardMarkup([[InlineKeyboardButton("SPADA", url=url)]])
 
 
 async def send_absen(context: SpadaCtx, hari, link_key):
@@ -110,7 +120,7 @@ async def send_absen(context: SpadaCtx, hari, link_key):
             markup(
                 [Absen.links[f"{link_key}_c"], Absen.links[f"{link_key}_d"]], link_key
             )
-            if link_key == "prak_alpro" or link_key == "prak_basdat"
+            if link_key == "prak_alpro"
             else markup(Absen.links[link_key])
         )
     )
