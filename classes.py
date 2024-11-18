@@ -30,6 +30,8 @@ class SpadaCtx(CallbackContext):
         self.chat_id = chat_id
         self.is_registered = self.is_registered
         self.is_owner = self.is_owner
+        self.GROUP = -1002309269021
+        self.OWNER = 1231482727
 
     @property
     def message(self):
@@ -53,9 +55,13 @@ class SpadaCtx(CallbackContext):
     async def react(self, reaction: ReactionEmoji):
         return await self._message.set_reaction(reaction)
 
-    async def reply(self, message):
+    async def reply(self, message, markup=None):
         return await self.application.bot.send_message(
-            chat_id=self._chat_id, text=message, disable_notification=True, parse_mode="MarkdownV2"
+            chat_id=self._chat_id,
+            text=message,
+            disable_notification=True,
+            parse_mode="MarkdownV2",
+            reply_markup=markup,
         )
 
     @classmethod

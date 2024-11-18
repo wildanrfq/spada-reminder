@@ -5,13 +5,14 @@ from telegram.constants import ReactionEmoji as Emoji
 
 from contextlib import redirect_stdout
 from classes import SpadaCtx
+from reminders import absen, Absen, markup
 
 
 async def e(update: Update, ctx: SpadaCtx):
     if not ctx.is_owner():
         return
 
-    env = {"ctx": ctx}
+    env = {"ctx": ctx, "update": update}
 
     env.update(globals())
     body = " ".join(ctx.args)
@@ -74,3 +75,44 @@ async def restart(update: Update, ctx: SpadaCtx):
         1,
     )
     ctx.application.stop_running()
+
+
+async def mock(update: Update, ctx: SpadaCtx):
+    if not ctx.is_owner():
+        return
+
+    link_key = ctx.args[0]
+    reply_markup = (
+        markup([Absen.links[f"{link_key}_b"], Absen.links[f"{link_key}_c"]], link_key)
+        if link_key == "prak_alpro" or link_key == "prak_basdat"
+        else markup(Absen.links[link_key])
+    )
+    hari = ""
+    for i, item in enumerate(Absen.schedule):
+        if item[2] == link_key:
+            hari = item[0]
+
+    await ctx.reply(absen(hari, link_key), reply_markup)
+
+
+async def send(update: Update, ctx: SpadaCtx):
+    if not ctx.is_owner():
+        return
+
+    link_key = ctx.args[0]
+    reply_markup = (
+        markup([Absen.links[f"{link_key}_b"], Absen.links[f"{link_key}_c"]], link_key)
+        if link_key == "prak_alpro" or link_key == "prak_basdat"
+        else markup(Absen.links[link_key])
+    )
+    hari = ""
+    for i, item in enumerate(Absen.schedule):
+        if item[2] == link_key:
+            hari = item[0]
+
+    await ctx.bot.send_message(
+        -1002309269021,
+        absen(hari, link_key),
+        parse_mode="MarkdownV2",
+        reply_markup=reply_markup,
+    )

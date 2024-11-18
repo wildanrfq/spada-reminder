@@ -38,7 +38,9 @@ def main():
         Command("p", ping),
         Command("ping", ping),
         Command("u", uptime),
-        Command("eval", e)
+        Command("eval", e),
+        Command("mock", mock),
+        Command("send", send),
     ]
 
     application = (
