@@ -2,7 +2,7 @@ import logging
 from datetime import datetime, time
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from pytz import timezone
-from classes import SpadaCtx
+from classes import SpadaCtx, MD
 
 logging.basicConfig()
 logging.getLogger("apscheduler").setLevel(logging.DEBUG)
@@ -128,12 +128,12 @@ async def send_absen(context: SpadaCtx, hari, link_key):
     await context.bot.send_message(
         context.GROUP,
         absen(hari, link_key),
-        parse_mode="MarkdownV2",
+        parse_mode=MD,
         reply_markup=reply_markup,
     )
 
     await context.bot.send_message(
-        context.OWNER, f"Absen `{link_key}` berhasil terkirim.", parse_mode="MarkdownV2"
+        context.OWNER, f"Absen `{link_key}` berhasil terkirim\.", parse_mode=MD
     )
 
 

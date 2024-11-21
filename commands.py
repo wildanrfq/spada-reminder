@@ -4,7 +4,7 @@ from telegram import Update
 from telegram.constants import ReactionEmoji as Emoji
 
 from contextlib import redirect_stdout
-from classes import SpadaCtx
+from classes import SpadaCtx, MD
 from reminders import absen, Absen, markup
 
 
@@ -125,6 +125,6 @@ async def send(update: Update, ctx: SpadaCtx):
     await ctx.bot.send_message(
         -1002309269021,
         absen(hari, link_key),
-        parse_mode="MarkdownV2",
+        parse_mode=MD,
         reply_markup=reply_markup,
     )

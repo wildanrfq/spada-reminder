@@ -1,6 +1,8 @@
 from telegram import Update
 from telegram.ext import CallbackContext, Application
-from telegram.constants import ReactionEmoji
+from telegram.constants import ReactionEmoji, ParseMode
+
+MD = ParseMode.MARKDOWN_V2
 
 
 class SpadaDatabase:
@@ -60,7 +62,7 @@ class SpadaCtx(CallbackContext):
             chat_id=self._chat_id,
             text=message,
             disable_notification=True,
-            parse_mode="MarkdownV2",
+            parse_mode=MD,
             reply_markup=markup,
         )
 
