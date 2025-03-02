@@ -50,9 +50,9 @@ async def ping(update: Update, ctx: SpadaCtx):
     start = time.monotonic()
     await ctx.bot.send_chat_action(update.effective_chat.id, "typing")
     end = time.monotonic()
-    res = (end - start) * 1000
-    await ctx.reply(f"Ping: {int(res)} ms")
-
+    res = int(((end - start) * 1000) / 100)
+    await ctx.reply(f"Ping: {res} ms")
+ 
 
 async def uptime(update: Update, ctx: SpadaCtx):
     delta_uptime = datetime.datetime.now(datetime.UTC) - ctx.bot_data["uptime"]
@@ -82,23 +82,12 @@ async def mock(update: Update, ctx: SpadaCtx):
         return
 
     link_key = ctx.args[0]
-    reply_markup = (
-        markup([Absen.links[f"{link_key}_b"], Absen.links[f"{link_key}_c"]], link_key)
-        if link_key == "prak_basdat"
-        else (
-            markup(
-                [Absen.links[f"{link_key}_c"], Absen.links[f"{link_key}_d"]], link_key
-            )
-            if link_key == "prak_alpro"
-            else markup(Absen.links[link_key])
-        )
-    )
     hari = ""
     for i, item in enumerate(Absen.schedule):
         if item[2] == link_key:
             hari = item[0]
-
-    await ctx.reply(absen(hari, link_key), reply_markup)
+    print(absen(hari, link_key))
+    await ctx.reply(absen(hari, link_key), markup(Absen.links[link_key], link_key))
 
 
 async def send(update: Update, ctx: SpadaCtx):
@@ -106,17 +95,6 @@ async def send(update: Update, ctx: SpadaCtx):
         return
 
     link_key = ctx.args[0]
-    reply_markup = (
-        markup([Absen.links[f"{link_key}_b"], Absen.links[f"{link_key}_c"]], link_key)
-        if link_key == "prak_basdat"
-        else (
-            markup(
-                [Absen.links[f"{link_key}_c"], Absen.links[f"{link_key}_d"]], link_key
-            )
-            if link_key == "prak_alpro" or link_key == "prak_basdat"
-            else markup(Absen.links[link_key])
-        )
-    )
     hari = ""
     for i, item in enumerate(Absen.schedule):
         if item[2] == link_key:
@@ -126,5 +104,5 @@ async def send(update: Update, ctx: SpadaCtx):
         -1002309269021,
         absen(hari, link_key),
         parse_mode=MD,
-        reply_markup=reply_markup,
+        reply_markup=markup(Absen.links[link_key], link_key),
     )
