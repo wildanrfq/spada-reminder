@@ -31,11 +31,11 @@ class Absen:
         "prak_jarkom_d": "https://spada.upnyk.ac.id/mod/attendance/view.php?id=648456",
         "alpro": "https://spada.upnyk.ac.id/mod/attendance/view.php?id=652919",
         "matriks": "https://spada.upnyk.ac.id/mod/attendance/view.php?id=644137",
-        "statistika": "https://spada.upnyk.ac.id/mod/forum/view.php?id=636071",
+        "statistika": "https://spada.upnyk.ac.id/mod/attendance/view.php?id=641228",
         "sti": "https://spada.upnyk.ac.id/mod/attendance/view.php?id=644230",
-        "jarkom": "https://spada.upnyk.ac.id/mod/forum/view.php?id=633273",
-        "bing": "https://spada.upnyk.ac.id/course/view.php?id=36161",
-        "kalkulus": "https://spada.upnyk.ac.id/course/view.php?id=36959",
+        "jarkom": "https://spada.upnyk.ac.id/mod/attendance/view.php?id=638573",
+        "bing": "https://spada.upnyk.ac.id/mod/attendance/view.php?id=640660",
+        "kalkulus": "https://spada.upnyk.ac.id/mod/attendance/view.php?id=648232",
     }
     waktu = {
         "olahraga": "06:00 \- 10:00",
@@ -93,7 +93,6 @@ def absen(hari, link_key):
         f"Matkul: *{matkul}*\n"
         f"Jam: *{waktu}*\n\n"
         f"Mata kuliah selanjutnya: *{next_matkul}*\n"
-        # f"{'Jam: ' if next_matkul != 'Pendidikan Agama Islam' else ''}*{next_waktu}*\n\n"
         f"Jam: *{next_waktu}*\n\n"
         f"*__Perhatikan waktu absennya\! Jangan menunda\-nunda\.__*"
     )
