@@ -1,7 +1,6 @@
 import logging
 from datetime import datetime, time
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.helpers import escape_markdown
 from pytz import timezone
 from classes import SpadaCtx, MD
 
