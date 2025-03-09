@@ -57,9 +57,15 @@ async def ping(update: Update, ctx: SpadaCtx):
 async def uptime(update: Update, ctx: SpadaCtx):
     delta_uptime = datetime.datetime.now(datetime.UTC) - ctx.bot_data["uptime"]
     hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
-    minutes, seconds = divmod(remainder, 60)
-    days, hours = divmod(hours, 24)
-    await ctx.reply(f"Uptime:\n{days}d, {hours}h, {minutes}m, {seconds}s")
+    b_minutes, b_seconds = divmod(remainder, 60)
+    b_days, b_hours = divmod(hours, 24)
+    uptime_seconds = int(time.monotonic())
+    d_days = uptime_seconds // 86400
+    d_hours = (uptime_seconds % 86400) // 3600
+    d_minutes = (uptime_seconds % 3600) // 60
+    d_seconds = uptime_seconds % 60
+
+    await ctx.reply(f"Device Uptime:\n{d_days}d, {d_hours}h, {d_minutes}m, {d_seconds}s\nBot Uptime:\n{b_days}d, {b_hours}h, {b_minutes}m, {b_seconds}s")
 
 
 async def restart(update: Update, ctx: SpadaCtx):
